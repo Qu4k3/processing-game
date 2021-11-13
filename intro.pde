@@ -1,6 +1,8 @@
+
+
 void intro() {
   String christmas = "¡Feliz Navidad!";
-  String company = "Mi empresa";
+  String company = "PGT - 2021";
 
   textAlign(CENTER);  
   fill(#ffffff);

@@ -1,16 +1,27 @@
+// Minim
 import ddf.minim.*;
 import ddf.minim.spi.*;
 import ddf.minim.signals.*;
 import ddf.minim.analysis.*;
 import ddf.minim.ugens.*;
 import ddf.minim.effects.*;
+// GifAnimation
+import gifAnimation.*;
+// ControlP5
+import controlP5.*;
 
+// Tipografía
+PFont f;
+// Imagenes
+PImage vynilOne, vynilTwo, album, bgOnePreview, bgTwoPreview;
+// Animación
+Gif myAnimation;
 // Audio
 Minim minim;
 AudioPlayer player;
-
-// Botones
+// Colecciones de botones
 ControlP5 cp5Menu;
+ControlP5 cp5Config;
 
 int gameState;
 final int INTRO = 0;
@@ -21,16 +32,30 @@ final int END = 4;
 
 void setup() {
   size(720, 480);
-  frameRate (30);
-  gameState = MENU;
-  
+  // frameRate (30);
+  gameState = CONFIG;
+
+  f = createFont("minecraft_font.ttf", 14);
+
+  myAnimation = new Gif(this, "bg-1.gif");
+  myAnimation.play();
+
+  vynilOne = loadImage("vynil-track-1.png");
+  vynilTwo = loadImage("vynil-track-2.png");
+  album = loadImage("album.png");
+  bgOnePreview = loadImage("bg-1-preview.png");
+  bgTwoPreview = loadImage("bg-2-preview.png");
+
+  /*
   minim = new Minim(this);
-  player = minim.loadFile("Nullsleep - silent night.mp3");
-  player.loop(); // reproduce la canción en bucle indefinidamente
+   player = minim.loadFile("8bp038-02-nullsleep-silent_night.mp3");
+   player.loop(); // reproduce la canción en bucle indefinidamente
+   */
 }
 
 void draw() {
-  background(#324376);
+  background(myAnimation);
+  textFont(f);
 
   switch(gameState) {    
   case INTRO: 
@@ -69,5 +94,19 @@ void draw() {
      */
     end();  
     break;
+  }
+}
+
+void controlEvent(ControlEvent theEvent) {
+  if (theEvent.isController()) {      
+    if (theEvent.name().equals("btnPlay")) {      
+      gameState = PLAY;
+    } else if (theEvent.name().equals("btnSettings")) {
+      gameState = CONFIG;
+    } else if (theEvent.name().equals("btnExit")) {
+      gameState = END;
+    } else if (theEvent.name().equals("btnBack")) {
+      gameState = MENU;
+    }
   }
 }

@@ -1,38 +1,43 @@
+import controlP5.*;
+
 void config() {
   textAlign(CENTER);  
   fill(#ffffff);  
+  textSize(18);  
   
-    float w = 180;
-  float h = 40;
-  float x = width/2 - w/2;
-  float y = (height/2 + 95) - h/2;
+  tint(255, 255);
 
-  // printamos los elementos de configuración
-  textSize(18);
-  text("MÚSICA", width/2, (height/2 - 100)); 
+  cp5Config = new ControlP5(this);
+
+  cp5Config.setFont(f);
+  cp5Config.setColorBackground(#000000);
+
+  // SELECTOR DE CANCIONES
+  text("MUSIC", width/2, (height/2 - 180));     
+
+  image(vynilOne, width/2 - 97.5, height/2 - 157.5);
+  image(album, width/2 - 135, height/2 - 160); 
   textSize(14);
-  text("Opción 1", (width/2 - 50), (height/2 - 60)); 
-  text("Opción 2", (width/2 + 50), (height/2 - 60)); 
+  text("Track 7", width/2 - 97.5, (height/2 - 60));
 
-  textSize(18);
-  text("FELICITACIÓN", width/2, height/2);
+tint(255, 127);
+  image(vynilTwo, width/2 + 65, height/2 - 157.5);
+  tint(255, 255);
+  image(album, width/2 + 27.5, height/2 - 160);
   textSize(14);
-  text("Opción 1", (width/2 - 50), (height/2 + 40)); 
-  text("Opción 2", (width/2 + 50), (height/2 + 40)); 
+  text("Track 2", width/2 + 65, (height/2 - 60));
 
- // printamos la empresa abajo de la pantalla tomando como referencia la altura de esta
-  textSize(16);
-  // en caso de pulsar clic izquierdo
-  if (mousePressed && (mouseButton == LEFT)) {
-    // y en caso de encontrarnos encima del botón previamente definido
-    if (mouseX > x && mouseX < (x + w) && mouseY > y && mouseY < (y + h)) {
-      gameState = MENU;
-    }
-  }
-  // ocultar estilos del rectangulo
-  noStroke();
-  noFill();
-  rect(x, y, w, h);
+  // SELECTOR DE FONDOS
+  textSize(18);
+  text("BACKGROUND", width/2, height/2 - 9);
   
-  text("← VOLVER AL MENÚ", width/2, (height/2 + 100));
+tint(255, 255);
+  image(bgOnePreview, width/2 - 140, height/2 + 10);
+  tint(255, 127);
+  image(bgTwoPreview, width/2 + 20, height/2 + 10);
+
+  cp5Config.addButton("btnBack")
+    .setPosition(width/2 - 75, height/2 + 140) // 32.5 - 22.5 = 10px de margen
+    .setLabel("<  Back home")
+    .setSize(150, 45);
 }
