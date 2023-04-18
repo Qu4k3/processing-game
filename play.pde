@@ -1,42 +1,73 @@
 void play() {
-  String gameDescription = "El juego es parecido al dinosaurio de Chrome,\n" +
-    "consiste en evitar que las tareas te consuman,\n" +
-    "recolectando elementos del entorno.";
-  int counter = 0;
-
-  float w = 180;
-  float h = 40;
-  float x = width/2 - w/2;
-  float y = (height/2 + 100) - h/2;
-
-  textAlign(CENTER);  
-  fill(#ffffff);
-
-  counter = millis() / 1000;
-
-  // printamos la descripción en el centro de la ventana
-  textSize(18);
-  text("COUNTER", width/2, (height/2 - 150));
-  textSize(14);
-  text(counter, width/2, (height/2 - 120));
-
-  // printamos la descripción en el centro de la ventana
-  textSize(24);
-  text(gameDescription, width/2, (height/2 -40));
-
-  // printamos la empresa abajo de la pantalla tomando como referencia la altura de esta
-  textSize(16);
-  // en caso de pulsar clic izquierdo
-  if (mousePressed && (mouseButton == LEFT)) {
-    // y en caso de encontrarnos encima del botón previamente definido
-    if (mouseX > x && mouseX < (x + w) && mouseY > y && mouseY < (y + h)) {
-      gameState = MENU;
+  if (start) {
+    pl = plAnimated;
+    //Add barriers at random distances such that 
+    //minimum distance is 60 frames to make the 
+    //game playable only if th game is in progress.
+    if (random(1) < 0.5 && frameCount % 60 == 0) {
+      obstacles.add(new Obstacle());
     }
   }
-  // ocultar estilos del rectangulo
-  noStroke();
-  noFill();
-  rect(x, y, w, h);
 
-  text("← VOLVER AL MENÚ", width/2, (height/2 + 100));
+  if (keyPressed || mousePressed) {
+    start = true; //Start the game on pressing the key
+    if (p.pos.y == height-170) { //Jump only if the player is already on the ground
+      PVector up = new PVector(0, -100); //Defining an appropriate upward force
+      p.applyForce(up); //Applying the upward force just defined
+    }
+  }
+
+  p.update(); //Update the player's position and speed
+  p.show(); //Display the player
+
+  //traverse and display the obstructions
+  for (int i=obstacles.size()-1; i>=0; i--)
+  {
+    Obstacle obs = obstacles.get(i);
+    p.update();
+
+    if (obs.hits(p))
+    {
+      obs.show();
+      safe=false;
+    } else
+    {
+      obs.show();
+      safe=true;
+    }
+
+    //Remove the barriers that went out of frame
+    if (obs.x < -obs.w) {
+      obstacles.remove(i);
+    }
+  }
+
+  fill(255, 255); //fill the text with colour for score
+  textSize(20); //Set size for the score
+  textAlign(CENTER);
+
+  if (safe && start) { //Increment the score if game is going on smoothly
+    score++;
+  } else {
+    //Restart the game
+    score=0;
+    text("Pulsa ESPACIO o haz CLIC IZQUIERDO\npara jugar", width/2, height/2-50);
+    start=false;
+  }
+
+  textAlign(LEFT);
+
+  //Display score
+  text("Score:", 20, 40);
+  text(score, 20+100, 40);
+
+  //Set and display high score
+  if (highScore < score) {
+    highScore = score;
+  }
+  
+  textAlign(RIGHT);
+
+  text("High Score:", width-100, 40);
+  text(highScore, width-30, 40);
 }

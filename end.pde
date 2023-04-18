@@ -3,15 +3,19 @@ void end() {
   fill(#ffffff);
   textSize(18);
 
-  int wait = 5000;
-  long waitStart = millis();
+  int timeWait = 5000;
 
   text("¡Gracias por jugar!\nEsperamos verte pronto", width/2, height/2);
-  
-  println(millis());
 
-  // mantenemos la pantalla 5 segundos      
-  if ((millis() - waitStart > wait)) {
-    exit();
+  // Calcular cuanto tiempo ha pasado
+  int passedTime = millis() - savedTime;
+  // Condicional de 5 segundos
+  if (passedTime > timeWait) {
+    if (!timerRestarted) {
+      savedTime = millis(); // Guardamos valor actual y reseteamos el timer
+      timerRestarted = true;
+    } else {        
+      exit();
+    }
   }
 }
