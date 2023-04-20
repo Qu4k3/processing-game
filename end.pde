@@ -1,12 +1,11 @@
 void end() {
   textAlign(CENTER);  
   fill(#ffffff);
-  textSize(18);
-
-  int timeWait = 5000;
-
-  text("¡Gracias por jugar!\nEsperamos verte pronto", width/2, height/2);
-
+  textSize(18);  
+  text("¡Gracias por jugar!\nEsperamos verte pronto", width / 2, height / 2);
+  
+  int timeWait = 5000;    
+  
   // Calcular cuanto tiempo ha pasado
   int passedTime = millis() - savedTime;
   // Condicional de 5 segundos

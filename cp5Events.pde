@@ -1,7 +1,7 @@
 void controlEvent(ControlEvent theEvent) {
   if (theEvent.isController()) {   
-    println("controlP5 event: "+theEvent.name());
-
+    println("controlP5 event: " + theEvent.name());
+    
     if (theEvent.name().equals("btnPlay")) {      
       gameState = PLAY;
       cp5Menu.setVisible(false);
