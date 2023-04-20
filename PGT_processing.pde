@@ -32,26 +32,26 @@ final int PLAY = 3;
 final int END = 4;
 
 // GAME
-Player p; //The object that jumps the barriers
-PImage pl, obs; //Image for the player object
+Player p; // el sprite que salta los obstáculos
+PImage pl, obs; // imagen para el objeto jugador/a
 Gif plAnimated;
 
-int score = 0; // keeps track of current game score
-int highScore = 0; //Keeps track of High Score
-boolean safe = true; // Keeps track of whether the player hit an obstruction
-boolean start = false; //Keeps track of whether the game is going on
+int score = 0; // puntuación actual del juego
+int highScore = 0; // puntuación máxima
+boolean safe = true; // valor si el jugador/a golpea un obstáculo
+boolean start = false; // valor si el juego está en marcha
 
-PVector gravity = new PVector(0, 0.1); //Pushes the player down on the ground (when it jumps)
-ArrayList<Obstacle> obstacles = new ArrayList<Obstacle>(); //List of Obstructions
-int screenWidth = 720; //The width of our screen
+PVector gravity = new PVector(0, 0.1); // empuja al jugador/a hacia abajo en el suelo (cuando salta)
+ArrayList<Obstacle> obstacles = new ArrayList<Obstacle>(); // lista de obstáculos
+int screenWidth = 720; // ancho de nuestra pantalla/escena
 
-void setup() {
+void setup() { 
   size(720, 480);
   // frameRate (30);
-  p = new Player(); //initialise a player
-  pl = loadImage("p_static.png"); //Load the image in the variable
-  obs = loadImage("o_cactus.png"); //Load the image in the variable
-  gameState = INTRO;
+  p = new Player(); // inicializamos el jugador/a
+  pl = loadImage("p_static.png"); // cargamos la imagen en la variable
+  obs = loadImage("o_cactus.png"); // cargamos la imagen en la variable
+  gameState = PLAY;
   savedTime = millis();
   
   customFont = createFont("minecraft_font.ttf", 14); // cargamos tipografía personalizada
@@ -145,7 +145,7 @@ void setup() {
   songVinylTwo = minim.loadFile("8bp038-07-dma-sc-the_first_blip_blop_noel.mp3");
   songVinylOne.loop(); // reproduce la primera canción en bucle indefinidamente
   
-  // inicializamos el fondo por defecto al primero
+  // inicializamos el fondo por defecto primero
   bgAnimated = bgOneAnimated;
 }
 

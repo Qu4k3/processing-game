@@ -1,32 +1,31 @@
 class Player {  
-  PVector pos; //This contains position of player
-  PVector acc; //This contains acceleration of player
-  PVector vel;  //This contains velocity of player
+  PVector pos; // valor con la posición del jugador/a
+  PVector acc; // valor con la acceleración del jugador/a
+  PVector vel;  // valor con la velocidad del jugador/a
   
-  float r = 40; ////This contains radius of player object
+  float r = 40; // radio del sprite del jugador
   
   Player() {
-    //initialise the player data members
+    // inicializamos los parámetros del jugador
     pos = new PVector(50,(height - 200));
     vel = new PVector(0, 20);
     acc = new PVector();
   }
-  
   
   void applyForce(PVector force) {
     acc.add(force);
   }
   
   void update() {
-    applyForce(gravity); //applies downward gravity
-    pos.add(vel); // in order to update pos wrt velocity
+    applyForce(gravity); // aplicamos furza de gravedad
+    pos.add(vel); // actualizamos la posición con la velocidad actual
     if (pos.y >=  height - 170) {
       pos.y = height - 170;
       vel.mult(0);
     }
     
-    vel.add(acc); //in order to update the vel as per acc
-    vel.limit(4); // in order to cap the vel for a smooth run
+    vel.add(acc); // actualizamos velocidad en función de la acceleración
+    vel.limit(4); // limitamos la velocidad para que el juego no se vuelva injugable
     
     acc.mult(0);
   }
@@ -37,28 +36,29 @@ class Player {
 }
 
 class Obstacle {
-  float y = 70; //This contains height of barriers
-  float w = 34; //This contains width of barriers
-  float x; //This contains x location of the barrier
-  float barrier_speed = 3; //This is the rate of change in position of barrier
+  float y = 70; // valor con la altura del obstáculo
+  float w = 34; // valor con el ancho del obstáculo
+  float x; // valor con la posición x del obstáculo
+  float barrier_speed = 3; // valor con la tasa de cambio en la posición del obstáculo
   
   Obstacle() {
-    x = screenWidth + w; //Increase the x location by with
+    // inicializamos los parámetros del obstáculo
+    x = screenWidth + w; // ajustamos la posición x para que sobresalga de la pantalla inicialmente
   }
   void update() {
-    //if the game is going on modify barrier x-locations if the game is going on
+    // si el juego está en curso modificar las posiciones x de los obstáculos
     if (start) {
       x -= barrier_speed;
     }
   }
   
-  //Check for collision, if locations of the player and the pipe is overla
+  // verificamos si hay colisión, si las posiciones del jugador/a y el obstáculo están superpuestos
   boolean hits(Player p) {
     return((p.pos.x > x) && (p.pos.x < (x + screenWidth))) && (p.pos.y > (height - y - p.r));
   }
   
   void show() {
-    if (start) { //display barriers if game is in progress
+    if (start) { // mostramos los obstáculos si el juego sigue en curso
       image(obs, x, height - y, w, y - 110);
     }
   }
