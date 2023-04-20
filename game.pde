@@ -3,7 +3,7 @@ class Player {
   PVector acc; // valor con la acceleración del jugador/a
   PVector vel;  // valor con la velocidad del jugador/a
   
-  float r = 40; // radio del sprite del jugador
+  float r = 44; // radio del sprite del jugador
   
   Player() {
     // inicializamos los parámetros del jugador
@@ -25,13 +25,14 @@ class Player {
     }
     
     vel.add(acc); // actualizamos velocidad en función de la acceleración
-    vel.limit(4); // limitamos la velocidad para que el juego no se vuelva injugable
+    vel.limit(6); // limitamos la velocidad para que el juego no se vuelva injugable
     
     acc.mult(0);
   }
   
   void show() {
-    image(pl, pos.x, pos.y, r * 2, r * 2);
+    imageMode(CORNER); // https://processing.org/reference/imageMode_.html
+    image(p1, pos.x, pos.y, r * 2, r * 2);
   }
 }
 
@@ -39,7 +40,7 @@ class Obstacle {
   float y = 70; // valor con la altura del obstáculo
   float w = 34; // valor con el ancho del obstáculo
   float x; // valor con la posición x del obstáculo
-  float barrier_speed = 3; // valor con la tasa de cambio en la posición del obstáculo
+  float obstacle_speed = 3; // valor con la tasa de cambio en la posición del obstáculo
   
   Obstacle() {
     // inicializamos los parámetros del obstáculo
@@ -48,7 +49,7 @@ class Obstacle {
   void update() {
     // si el juego está en curso modificar las posiciones x de los obstáculos
     if (start) {
-      x -= barrier_speed;
+      x -= obstacle_speed;
     }
   }
   
@@ -58,8 +59,8 @@ class Obstacle {
   }
   
   void show() {
-    if (start) { // mostramos los obstáculos si el juego sigue en curso
-      image(obs, x, height - y, w, y - 110);
+    if (start) { // mostramos los obstáculos si el juego ha iniciado
+      image(obs, x, (height - 200), w, y);
     }
   }
 }

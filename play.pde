@@ -1,8 +1,8 @@
 void play() {
   if (start) {
-    pl = plAnimated;
-     // Añadir obstaculos a distancias aleatorias de manera que
-     // la distancia minima es de 60 frames para tener tiempo de reacción
+    p1 = plAnimated;
+    // Añadir obstaculos a distancias aleatorias de manera que
+    // la distancia minima es de 60 frames para tener tiempo de reacción
     if (random(1) < 0.5 && frameCount % 60 == 0) {
       obstacles.add(new Obstacle());
     }

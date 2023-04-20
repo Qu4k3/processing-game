@@ -10,15 +10,18 @@ void controlEvent(ControlEvent theEvent) {
     if (theEvent.name().equals("btnSettings")) {
       gameState = CONFIG;
       cp5Menu.setVisible(false);
+      cp5Game.setVisible(false);
     }    
     if (theEvent.name().equals("btnExit")) {
       gameState = END;
       cp5Menu.setVisible(false);
       cp5Config.setVisible(false);
+      cp5Game.setVisible(false);
     }    
-    if (theEvent.name().equals("btnBack")) {      
+    if (theEvent.name().equals("btnBack") || theEvent.name().equals("btnBackGame")) {      
       gameState = MENU;
       cp5Config.setVisible(false);
+      cp5Game.setVisible(false);
     }
     if (theEvent.name().equals("btnVinylOne")) {      
       if (songVinylTwo.isPlaying()) {

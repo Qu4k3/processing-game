@@ -21,6 +21,7 @@ Minim minim;
 AudioPlayer songVinylOne, songVinylTwo;
 ControlP5 cp5Menu;
 ControlP5 cp5Config;
+ControlP5 cp5Game;
 
 int gameState;
 int savedTime;
@@ -32,8 +33,8 @@ final int PLAY = 3;
 final int END = 4;
 
 // GAME
-Player p; // el sprite que salta los obstáculos
-PImage pl, obs; // imagen para el objeto jugador/a
+Player p; // clase jugador/a
+PImage p1, obs; // sprite del jugador/a + obstáculo
 Gif plAnimated;
 
 int score = 0; // puntuación actual del juego
@@ -46,10 +47,10 @@ ArrayList<Obstacle> obstacles = new ArrayList<Obstacle>(); // lista de obstácul
 int screenWidth = 720; // ancho de nuestra pantalla/escena
 
 void setup() { 
-  size(720, 480);
+  size(720, 480); // inicializamos el canvas
   // frameRate (30);
   p = new Player(); // inicializamos el jugador/a
-  pl = loadImage("p_static.png"); // cargamos la imagen en la variable
+  p1 = loadImage("p_static.png"); // cargamos la imagen en la variable
   obs = loadImage("o_cactus.png"); // cargamos la imagen en la variable
   gameState = PLAY;
   savedTime = millis();
@@ -139,6 +140,20 @@ void setup() {
   
   cp5Config.setVisible(false);
   
+  // inicializamos los elementos cp5 relacionados con la vista de configuración
+  cp5Game = new ControlP5(this);
+  cp5Game.setFont(customFont);
+  cp5Game.setColorBackground(#EDC8B6);
+  cp5Game.setColorForeground(#E29EAA); // hover
+  cp5Game.setColorActive(#E29EAA); // click
+  
+  cp5Game.addButton("btnBackGame")
+   .setPosition(width / 2 - 75, 10)
+   .setLabel("<  Back home")
+   .setSize(150, 45);
+  
+  cp5Game.setVisible(false);
+  
   // inicializamos la librería de audio y preparamos los sonidos disponibles
   minim = new Minim(this);
   songVinylOne = minim.loadFile("8bp038-02-nullsleep-silent_night.mp3");
@@ -166,6 +181,7 @@ void draw() {
       config();
       break;
     case PLAY : 
+      cp5Game.setVisible(true);
       play();
       break;
     case END : 
