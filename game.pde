@@ -17,7 +17,7 @@ class Player {
   }
   
   void update() {
-    applyForce(gravity); // aplicamos furza de gravedad
+    applyForce(gravity); // aplicamos fuerza de gravedad
     pos.add(vel); // actualizamos la posición con la velocidad actual
     if (pos.y >=  height - 170) {
       pos.y = height - 170;
@@ -47,20 +47,36 @@ class Obstacle {
     x = screenWidth + w; // ajustamos la posición x para que sobresalga de la pantalla inicialmente
   }
   void update() {
+    println("Start variable -----------------------------------: " + start);
     // si el juego está en curso modificar las posiciones x de los obstáculos
     if (start) {
       x -= obstacle_speed;
     }
   }
   
-  // verificamos si hay colisión, si las posiciones del jugador/a y el obstáculo están superpuestos
+  // Verificamos si hay colisión, si las posiciones del jugador/a y el obstáculo están superpuestos
   boolean hits(Player p) {
-    return((p.pos.x > x) && (p.pos.x < (x + screenWidth))) && (p.pos.y > (height - y - p.r));
+    // return(p.pos.x + p.r > x && p.pos.x - p.r < (x + w)) && (p.pos.y > (height - y - p.r));
+    float obstacleBottom = height - 140; // Parte de abajo del obstaculo
+    
+    // Comprobamos el solapamiento de ambos objetos en el eje X
+    boolean xOverlap = (p.pos.x + p.r > x && p.pos.x - p.r/4 < (x + w));
+    
+    // Comprobamos el solapamiento de ambos objetos en el eje Y
+    boolean yOverlap = (p.pos.y > (obstacleBottom - y));
+    
+    // COmprobar que cumple colisión en ambos ejes
+    if (xOverlap && yOverlap) {
+      collisionSound.trigger(); // Suena efecto de colisión
+      return true;
+    }
+    
+    return false;
   }
   
   void show() {
     if (start) { // mostramos los obstáculos si el juego ha iniciado
-      image(obs, x, (height - 200), w, y);
+      image(obs, x, (height - 150), w, y);
     }
   }
 }

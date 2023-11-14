@@ -19,6 +19,7 @@ Gif bgAnimated, bgOneAnimated, bgTwoAnimated, vinylOneAnimated, vinylTwoAnimated
 Button buttonVinylOne, buttonVinylTwo, buttonBgOne, buttonBgTwo;
 Minim minim;
 AudioPlayer songVinylOne, songVinylTwo;
+AudioSample jumpSound, collisionSound;
 ControlP5 cp5Menu;
 ControlP5 cp5Config;
 ControlP5 cp5Game;
@@ -42,7 +43,7 @@ int highScore = 0; // puntuación máxima
 boolean safe = true; // valor si el jugador/a golpea un obstáculo
 boolean start = false; // valor si el juego está en marcha
 
-PVector gravity = new PVector(0, 0.1); // empuja al jugador/a hacia abajo en el suelo (cuando salta)
+PVector gravity = new PVector(0, 0.2); // empuja al jugador/a hacia abajo en el suelo (cuando salta)
 ArrayList<Obstacle> obstacles = new ArrayList<Obstacle>(); // lista de obstáculos
 int screenWidth = 720; // ancho de nuestra pantalla/escena
 
@@ -51,8 +52,9 @@ void setup() {
   // frameRate (30);
   p = new Player(); // inicializamos el jugador/a
   p1 = loadImage("p_static.png"); // cargamos la imagen en la variable
-  obs = loadImage("o_cactus.png"); // cargamos la imagen en la variable
-  gameState = PLAY;
+  obs = loadImage("obs_cactus.png"); // cargamos la imagen en la variable
+  println("Is obstacle image loaded? " + (obs != null));
+  gameState = INTRO;
   savedTime = millis();
   
   customFont = createFont("minecraft_font.ttf", 14); // cargamos tipografía personalizada
@@ -159,6 +161,8 @@ void setup() {
   songVinylOne = minim.loadFile("8bp038-02-nullsleep-silent_night.mp3");
   songVinylTwo = minim.loadFile("8bp038-07-dma-sc-the_first_blip_blop_noel.mp3");
   songVinylOne.loop(); // reproduce la primera canción en bucle indefinidamente
+  jumpSound = minim.loadSample("p-jump.wav");
+  collisionSound = minim.loadSample("crack.mp3");
   
   // inicializamos el fondo por defecto primero
   bgAnimated = bgOneAnimated;
